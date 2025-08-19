@@ -89,15 +89,27 @@
   <div id="result"></div>
 
   <script>
-    // 建立所有單元（1-1 到 27-1）及固定網址
+    // 建立所有單元：顯示名稱 vs 表單名稱
     const allUnitsGrouped = [];
     for (let i = 1; i <= 27; i++) {
       const numStr = i < 10 ? '0' + i : i;
-      const stUnit = `${i}-1 句子聽打挑戰`;
-      const ssUnit = `${i}-1 句子跟讀挑戰`;
+
+      // 顯示名稱（給使用者看）
+      const stDisplay = `${i}-1 句子聽打挑戰`;
+      const ssDisplay = `${i}-1 句子跟讀挑戰`;
+
+      // 表單裡實際存的名稱（12-x-1）
+      const stUnit = `12-${i}-1 句子聽打挑戰`;
+      const ssUnit = `12-${i}-1 句子跟讀挑戰`;
+
       const stLink = `https://yoonakorean.github.io/12${numStr}01ST/`;
       const ssLink = `https://yoonakorean.github.io/12${numStr}01SS/`;
-      allUnitsGrouped.push([stUnit, stLink, ssUnit, ssLink]);
+
+      allUnitsGrouped.push({
+        stDisplay, ssDisplay, // 顯示名稱
+        stUnit, ssUnit,       // 表單名稱
+        stLink, ssLink        // 網址
+      });
     }
 
     function renderInitialTable() {
@@ -113,10 +125,8 @@
 
       allUnitsGrouped.forEach(row => {
         html += "<tr>";
-        // 左：跟讀挑戰（只顯示連結）
-        html += `<td><a href="${row[3]}" target="_blank" rel="noopener">${row[2]}</a></td>`;
-        // 右：聽打挑戰（尚未挑戰）
-        html += `<td class="not-tested"><a href="${row[1]}" target="_blank" rel="noopener">${row[0]}</a><br>尚未挑戰</td>`;
+        html += `<td><a href="${row.ssLink}" target="_blank" rel="noopener">${row.ssDisplay}</a></td>`;
+        html += `<td class="not-tested"><a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>尚未挑戰</td>`;
         html += "</tr>";
       });
 
@@ -160,16 +170,14 @@
           <tbody>`;
 
         allUnitsGrouped.forEach(row => {
-          const stUnit = row[0];
-          const stLink = row[1];
-          const ssUnit = row[2];
-          const ssLink = row[3];
-
-          const stScore = latestScores[stUnit]?.score || 0;
+          const stScore = latestScores[row.stUnit]?.score || 0;
 
           html += "<tr>";
-          html += `<td><a href="${ssLink}" target="_blank" rel="noopener">${ssUnit}</a></td>`;
-          html += `<td class="${stScore >= 80 ? 'pass' : 'not-tested'}"><a href="${stLink}" target="_blank" rel="noopener">${stUnit}</a><br>${stScore >= 80 ? '✅ 已完成' : '尚未挑戰'}</td>`;
+          html += `<td><a href="${row.ssLink}" target="_blank" rel="noopener">${row.ssDisplay}</a></td>`;
+          html += `<td class="${stScore >= 80 ? 'pass' : 'not-tested'}">
+                     <a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>
+                     ${stScore >= 80 ? '✅ 已完成' : '尚未挑戰'}
+                   </td>`;
           html += "</tr>";
         });
 
