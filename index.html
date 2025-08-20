@@ -176,7 +176,7 @@
           html += `<td><a href="${row.ssLink}" target="_blank" rel="noopener">${row.ssDisplay}</a></td>`;
           html += `<td class="${stScore >= 80 ? 'pass' : 'not-tested'}">
                      <a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>
-                     ${stScore >= 80 ? '✅ 已完成' : '尚未挑戰'}
+                     ${stScore > 0 ? stScore + ' 分' + (stScore >= 80 ? ' ✅合格' : '') : '尚未挑戰'}
                    </td>`;
           html += "</tr>";
         });
