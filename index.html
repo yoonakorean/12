@@ -63,7 +63,7 @@
     }
     a {
       text-decoration: none;
-      color: black; /* 固定挑戰名稱為黑色 */
+      color: black; /* 挑戰名稱固定黑色 */
     }
     a:hover {
       text-decoration: underline;
@@ -94,11 +94,9 @@
     for (let i = 1; i <= 27; i++) {
       const numStr = i < 10 ? '0' + i : i;
 
-      // 顯示名稱（給使用者看）
       const stDisplay = `${i}-1 句子聽打挑戰`;
       const ssDisplay = `${i}-1 句子跟讀挑戰`;
 
-      // 表單裡實際存的名稱（12-x-1）
       const stUnit = `12-${i}-1 句子聽打挑戰`;
       const ssUnit = `12-${i}-1 句子跟讀挑戰`;
 
@@ -106,9 +104,9 @@
       const ssLink = `https://yoonakorean.github.io/12${numStr}01SS/`;
 
       allUnitsGrouped.push({
-        stDisplay, ssDisplay, // 顯示名稱
-        stUnit, ssUnit,       // 表單名稱
-        stLink, ssLink        // 網址
+        stDisplay, ssDisplay,
+        stUnit, ssUnit,
+        stLink, ssLink
       });
     }
 
@@ -127,7 +125,7 @@
         html += "<tr>";
         html += `<td><a href="${row.ssLink}" target="_blank" rel="noopener">${row.ssDisplay}</a></td>`;
         html += `<td><a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>
-                   <span class="not-tested">尚未挑戰</span></td>`;
+                 <span class="not-tested">尚未挑戰</span></td>`;
         html += "</tr>";
       });
 
