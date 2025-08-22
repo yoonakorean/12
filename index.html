@@ -63,7 +63,7 @@
     }
     a {
       text-decoration: none;
-      color: inherit;
+      color: black; /* 固定挑戰名稱為黑色 */
     }
     a:hover {
       text-decoration: underline;
@@ -126,7 +126,8 @@
       allUnitsGrouped.forEach(row => {
         html += "<tr>";
         html += `<td><a href="${row.ssLink}" target="_blank" rel="noopener">${row.ssDisplay}</a></td>`;
-        html += `<td class="not-tested"><a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>尚未挑戰</td>`;
+        html += `<td><a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>
+                   <span class="not-tested">尚未挑戰</span></td>`;
         html += "</tr>";
       });
 
@@ -147,7 +148,7 @@
 
         const userRecords = data.filter(row => row.nickname && row.nickname.toLowerCase() === nickname.toLowerCase());
 
-      const bestScores = {};
+        const bestScores = {};
         userRecords.forEach(record => {
           const unit = record.gametitle || "未分類";
           const score = Number(record.score) || 0;
@@ -174,9 +175,13 @@
 
           html += "<tr>";
           html += `<td><a href="${row.ssLink}" target="_blank" rel="noopener">${row.ssDisplay}</a></td>`;
-          html += `<td class="${stScore >= 80 ? 'pass' : 'not-tested'}">
+          html += `<td>
                      <a href="${row.stLink}" target="_blank" rel="noopener">${row.stDisplay}</a><br>
-                     ${stScore > 0 ? stScore + ' 分' + (stScore >= 80 ? ' ✅合格' : '') : '尚未挑戰'}
+                     ${stScore > 0 
+                        ? `<span class="${stScore >= 80 ? 'pass' : 'not-tested'}">
+                             ${stScore} 分${stScore >= 80 ? ' ✅合格' : ''}
+                           </span>` 
+                        : '<span class="not-tested">尚未挑戰</span>'}
                    </td>`;
           html += "</tr>";
         });
